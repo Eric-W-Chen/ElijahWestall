@@ -22,6 +22,18 @@ app.use(express.static(path.join(__dirname, "public")));
 // For parsing application/json
 app.use(express.json());
 
+// Middleware to redirect HTTP to HTTPS
+app.use((req, res, next) => {
+  if (
+    req.headers["x-forwarded-proto"] !== "https" &&
+    process.env.NODE_ENV === "production"
+  ) {
+    res.redirect("https://" + req.hostname + req.url);
+  } else {
+    next();
+  }
+});
+
 app.get("/", (req, res) => {
   res.sendFile("/index.html", { root: __dirname });
 });
