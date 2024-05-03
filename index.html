@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Elijah Westall</title>
+    <link rel="icon" href="./logo.jpg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo-container">
+        <img src="logo.jpg" alt="Logo" class="logo" />
+      </div>
+      <div class="social-icons-container">
+        <a href="#" class="social-icon" data-url="https://twitter.com/">
+          <img src="./icons/twitter.avif" alt="Twitter" />
+        </a>
+        <a href="#" class="social-icon" data-url="https://instagram.com/">
+          <img src="./icons/instagram.png" alt="Instagram" />
+        </a>
+        <a href="#" class="social-icon" data-url="https://youtube.com/">
+          <img src="./icons/youtube.webp" alt="YouTube" />
+        </a>
+        <a
+          href="mailto:example@example.com"
+          class="social-icon"
+          data-url="https://yourdomain.com/contact"
+        >
+          <img src="./icons/mail.jpg" alt="Email" />
+        </a>
+      </div>
+    </header>
+
+    <div class="content">
+      <div id="videoPlayer" style="display: none"></div>
+      <div class="video-gallery">
+        <div
+          class="video-thumbnail"
+          data-video-url="https://www.youtube.com/watch?v=wPS-TlWiQzs"
+        >
+          <img src="./thumbnails/barber.jpg" alt="Best Barbers of the World" />
+          <div class="play-icon">▶</div>
+          <p>Best Barbers of the World</p>
+        </div>
+        <div
+          class="video-thumbnail"
+          data-video-url="https://www.youtube.com/watch?v=L-p6s2enQB8&pp=ygULdmlkZW9ncmFwaHk%3D"
+        >
+          <img src="./thumbnails/videography.jpg" alt="Videography Basics" />
+          <div class="play-icon">▶</div>
+          <p>Videography Basics</p>
+        </div>
+        <div
+          class="video-thumbnail"
+          data-video-url="https://www.youtube.com/watch?v=Ow7w7FUAkdk&pp=ygUOQ2luZW1hdGdvcmFwaHk%3D"
+        >
+          <img
+            src="./thumbnails/cinematography.jpeg"
+            alt="The 3 Basics of Cinematography"
+          />
+          <div class="play-icon">▶</div>
+          <p>The 3 Basics of Cinematography</p>
+        </div>
+        <div
+          class="video-thumbnail"
+          data-video-url="https://www.youtube.com/watch?v=JMrCKWz0gJk&pp=ygUOY2luZW1hdG9ncmFwaHk%3D"
+        >
+          <img
+            src="./thumbnails/Cinematography-Sunset.jpg"
+            alt="Turn Ordinary Films to Cinematic Films"
+          />
+          <div class="play-icon">▶</div>
+          <p>Turn Ordinary Films to Cinematic Films</p>
+        </div>
+        <div
+          class="video-thumbnail"
+          data-video-url="https://www.youtube.com/watch?v=sFvj6a_GlPY&pp=ygUFZHVua3M%3D"
+        >
+          <img src="./thumbnails/dunk.jpg" alt="NBA - Greatest Dunks of 2024" />
+          <div class="play-icon">▶</div>
+          <p>NBA - Greatest Dunks of 2024</p>
+        </div>
+        <div
+          class="video-thumbnail"
+          data-video-url="https://www.youtube.com/watch?v=IIIo5_hkQI8&pp=ygUXYmVzdCBrbm9ja291dCAyMDIzLTIwMjQ%3D"
+        >
+          <img src="./thumbnails/mma.jpg" alt="Best Knockouts of 2024" />
+          <div class="play-icon">▶</div>
+          <p>Best Knockouts of 2024</p>
+        </div>
+
+        <div
+          class="video-thumbnail"
+          data-video-url="https://www.youtube.com/watch?v=bmd5NigtmRc&pp=ygUXSG90dGVzdCBTbmVha2VycyBvZiAyMDI%3D"
+        >
+          <img
+            src="./thumbnails/sneakers.avif"
+            alt="Hottest Sneakers of 2023"
+          />
+          <div class="play-icon">▶</div>
+          <p>Hottest Sneakers of 2023</p>
+        </div>
+        <div
+          class="video-thumbnail"
+          data-video-url="https://www.youtube.com/watch?v=s3GDfpBNITs&pp=ygUJbGFzIHZlZ2Fz"
+        >
+          <img src="./thumbnails/vegas.jpeg" alt="Las Vegas 2024" />
+          <div class="play-icon">▶</div>
+          <p>Las Vegas 2024</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Load the YouTube IFrame API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- Load your local script -->
+    <script src="script.js"></script>
+  </body>
+</html>

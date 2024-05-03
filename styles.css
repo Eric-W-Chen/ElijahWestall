@@ -1,0 +1,126 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #000;
+  color: #fff;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center-align children horizontally */
+  justify-content: center; /* Center-align children vertically */
+  padding: 10px;
+  background-color: #121212; /* Dark background for the navbar */
+}
+
+.logo-container {
+  margin-bottom: 10px; /* Space between logo and social icons */
+}
+
+.logo {
+  width: 100px; /* Adjust size as necessary */
+}
+
+.social-icons-container {
+  display: flex;
+  justify-content: center; /* Center-align social icons horizontally */
+  gap: 10px;
+}
+
+.social-icon {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.social-icon img {
+  width: 24px; /* or any size that fits your design */
+  height: 24px;
+  vertical-align: middle;
+}
+
+.social-icon:hover img {
+  transform: scale(1.1); /* Slightly enlarge icons on hover */
+  transition: transform 0.3s ease;
+}
+
+.video-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Creates two columns per row */
+  gap: 20px; /* Spacing between thumbnails */
+  padding: 20px; /* Padding around the entire grid */
+}
+
+.video-thumbnail {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  aspect-ratio: 16 / 9; /* Ensures all thumbnails maintain a 16:9 aspect ratio */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000; /* Optional: in case of transparent images */
+}
+
+.video-thumbnail img {
+  width: 100%; /* Makes sure the image covers the full area of the thumbnail */
+  height: 100%; /* Ensures the height matches the width maintaining the aspect ratio */
+  object-fit: cover; /* Ensures the image covers the area without distorting aspect ratio */
+}
+
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 30px; /* Play icon size */
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-thumbnail:hover .play-icon {
+  opacity: 1; /* Play icon appears on hover */
+}
+
+.video-thumbnail p {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 16px;
+  padding: 10px 0;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ); /* Semi-transparent overlay for readability */
+  margin: 0;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.video-thumbnail:hover p {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.9
+  ); /* Darkens the caption background on hover for effect */
+}
+
+@media (max-width: 600px) {
+  .video-gallery {
+    grid-template-columns: 1fr; /* Only one column on small screens */
+  }
+}
+
+#videoPlayer {
+  width: 100%; /* Ensure it matches the thumbnail's width */
+  margin: auto;
+  display: none;
+}
