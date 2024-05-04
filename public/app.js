@@ -26,7 +26,11 @@ document
   .querySelector(".video-gallery")
   .addEventListener("click", function (event) {
     let target = event.target.closest(".video-thumbnail");
+    console.log("Gallery clicked"); // Debugging log
+
     if (target && target.dataset.videoUrl && isPlayerReady) {
+      console.log("Playing video"); // Debugging log
+
       const videoUrl = new URL(target.dataset.videoUrl);
       const videoId = videoUrl.searchParams.get("v");
       if (player && typeof player.loadVideoById === "function") {
@@ -111,7 +115,10 @@ function onPlayerError(event) {
 function addRemoveEventListener(button) {
   button.addEventListener("click", function (event) {
     event.stopPropagation(); // Prevent triggering gallery click
+    console.log("Remove clicked"); // Debugging log
+
     const thumbnailDiv = button.parentNode;
+    // const thumbnailDiv = button.closest(".video-thumbnail"); // Using closest to be more specific
     const videoUrl = thumbnailDiv.dataset.videoUrl;
 
     // Fetch request to delete the thumbnail
@@ -120,7 +127,7 @@ function addRemoveEventListener(button) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.message); // Log the server response message
+        console.log("Thumbnail removed", data.message); // Debugging log
         thumbnailDiv.remove(); // Remove the thumbnail from the DOM
       })
       .catch((err) => console.error("Error deleting thumbnail:", err));
@@ -144,7 +151,8 @@ function createAndAppendThumbnail(data) {
   gallery.appendChild(newThumbnail);
 
   // Add event listener to the remove button
-  addRemoveEventListener(newThumbnail.querySelector(".remove-thumbnail"));
+  const removeButton = newThumbnail.querySelector(".remove-thumbnail");
+  addRemoveEventListener(removeButton);
 }
 
 document
@@ -175,6 +183,7 @@ document
         return response.json();
       })
       .then((data) => {
+        //creating and appending thumbnail
         createAndAppendThumbnail(data);
         this.reset(); // Reset the form fields after the data is successfully submitted
       })
@@ -183,22 +192,12 @@ document
       });
   });
 
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("/thumbnails")
+document.addEventListener("DOMContentLoaded", async function () {
+  await fetch("/thumbnails")
     .then((response) => response.json())
     .then((data) => {
-      const gallery = document.querySelector(".video-gallery");
-      data.forEach((thumb) => {
-        const newThumbnail = document.createElement("div");
-        newThumbnail.className = "video-thumbnail";
-        newThumbnail.innerHTML = `
-              <button class="remove-thumbnail" style="display: none">X</button>
-              <img src="${thumb.path}" alt="${thumb.description}">
-              <div class="play-icon">▶</div>
-              <p>${thumb.description}</p>
-          `;
-        newThumbnail.dataset.videoUrl = thumb.youtubeLink;
-        gallery.appendChild(newThumbnail);
+      data.forEach((thumbnail) => {
+        createAndAppendThumbnail(thumbnail);
       });
     })
     .catch((error) => console.error("Error loading thumbnails:", error));

@@ -51,8 +51,6 @@ app.post("/upload", upload.single("thumbnailImage"), (req, res) => {
     return res.status(400).send("No file uploaded");
   }
 
-  console.log(req);
-
   const filePath = `/thumbnails/${req.file.filename}`;
   thumbnails.push({ path: filePath, youtubeLink, description });
   fs.writeFileSync(thumbnailsDataPath, JSON.stringify(thumbnails, null, 2));
