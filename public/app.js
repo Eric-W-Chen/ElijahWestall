@@ -26,11 +26,8 @@ document
   .querySelector(".video-gallery")
   .addEventListener("click", function (event) {
     let target = event.target.closest(".video-thumbnail");
-    console.log("Gallery clicked"); // Debugging log
 
     if (target && target.dataset.videoUrl && isPlayerReady) {
-      console.log("Playing video"); // Debugging log
-
       const videoUrl = new URL(target.dataset.videoUrl);
       const videoId = videoUrl.searchParams.get("v");
       if (player && typeof player.loadVideoById === "function") {
@@ -66,14 +63,10 @@ function onYouTubeIframeAPIReady() {
 }
 
 function playVideo(videoId) {
-  //   console.log(`Attempting to play VideoID: ${videoId}`);
   if (player && typeof player.loadVideoById === "function") {
-    // console.log("Player is ready, checking video ID...");
     if (player.getVideoData() && player.getVideoData().video_id !== videoId) {
-      //   console.log("Loading new video");
       player.loadVideoById(videoId);
     } else if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
-      //   console.log("Resuming video playback");
       player.playVideo();
     }
     // Ensure the player element is correctly shown
@@ -115,7 +108,6 @@ function onPlayerError(event) {
 function addRemoveEventListener(button) {
   button.addEventListener("click", function (event) {
     event.stopPropagation(); // Prevent triggering gallery click
-    console.log("Remove clicked"); // Debugging log
 
     const thumbnailDiv = button.parentNode;
     // const thumbnailDiv = button.closest(".video-thumbnail"); // Using closest to be more specific
@@ -127,7 +119,6 @@ function addRemoveEventListener(button) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Thumbnail removed", data.message); // Debugging log
         thumbnailDiv.remove(); // Remove the thumbnail from the DOM
       })
       .catch((err) => console.error("Error deleting thumbnail:", err));
