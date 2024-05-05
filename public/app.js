@@ -2,11 +2,13 @@
 let player;
 let isPlayerReady = false; // Flag to track the readiness of the player
 const ADMIN_KEY = "1234";
+let admin = false;
 
 window.onload = function () {
   const params = new URLSearchParams(window.location.search);
   const adminKey = params.get("admin_key");
   if (adminKey === ADMIN_KEY) {
+    admin = true;
     document.getElementById("uploadForm").style.display = "block";
     document.querySelectorAll(".remove-thumbnail").forEach((button) => {
       button.style.display = "flex"; // Show the remove button
@@ -141,9 +143,11 @@ function createAndAppendThumbnail(data) {
   // Append the new thumbnail to the gallery
   gallery.appendChild(newThumbnail);
 
-  // Add event listener to the remove button
-  const removeButton = newThumbnail.querySelector(".remove-thumbnail");
-  addRemoveEventListener(removeButton);
+  if (admin) {
+    // Add event listener to the remove button
+    const removeButton = newThumbnail.querySelector(".remove-thumbnail");
+    addRemoveEventListener(removeButton);
+  }
 }
 
 document
