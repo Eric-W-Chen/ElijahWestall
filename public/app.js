@@ -5,16 +5,21 @@ const ADMIN_KEY = "1234";
 let admin = false;
 
 window.onload = function () {
-  const params = new URLSearchParams(window.location.search);
-  const adminKey = params.get("admin_key");
-  if (adminKey === ADMIN_KEY) {
-    admin = true;
-    document.getElementById("uploadForm").style.display = "block";
-    document.querySelectorAll(".remove-thumbnail").forEach((button) => {
-      button.style.display = "flex"; // Show the remove button
-    });
-  }
+  checkAdminStatus();
 };
+
+function checkAdminStatus() {
+  const params = new URLSearchParams(window.location.search);
+  admin = params.get("admin_key") === ADMIN_KEY;
+  if (admin) updateAdminUI();
+}
+
+function updateAdminUI() {
+  document.getElementById("uploadForm").style.display = "block";
+  document.querySelectorAll(".remove-thumbnail").forEach((button) => {
+    button.style.display = "flex";
+  });
+}
 
 document.querySelector("header").addEventListener("click", function (event) {
   let target = event.target.closest(".social-icon");
@@ -109,22 +114,21 @@ function onPlayerError(event) {
 
 function addRemoveEventListener(button) {
   button.addEventListener("click", function (event) {
-    event.stopPropagation(); // Prevent triggering gallery click
-
+    event.stopPropagation();
     const thumbnailDiv = button.parentNode;
-    // const thumbnailDiv = button.closest(".video-thumbnail"); // Using closest to be more specific
-    const videoUrl = thumbnailDiv.dataset.videoUrl;
-
-    // Fetch request to delete the thumbnail
-    fetch(`/delete-thumbnail?url=${encodeURIComponent(videoUrl)}`, {
-      method: "DELETE",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        thumbnailDiv.remove(); // Remove the thumbnail from the DOM
-      })
-      .catch((err) => console.error("Error deleting thumbnail:", err));
+    removeThumbnail(thumbnailDiv.dataset.videoUrl, thumbnailDiv);
   });
+}
+
+function removeThumbnail(url, element) {
+  fetch(`/delete-thumbnail?url=${encodeURIComponent(url)}`, {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      element.remove();
+    })
+    .catch((err) => console.error("Error deleting thumbnail:", err));
 }
 
 // Function to create and append the thumbnail
@@ -132,7 +136,19 @@ function createAndAppendThumbnail(data) {
   const gallery = document.querySelector(".video-gallery");
   const newThumbnail = document.createElement("div");
   newThumbnail.className = "video-thumbnail";
-  newThumbnail.innerHTML = `
+  newThumbnail.dataset.videoUrl = data.youtubeLink;
+  newThumbnail.innerHTML = thumbnailHTML(data);
+
+  if (admin) {
+    const removeButton = newThumbnail.querySelector(".remove-thumbnail");
+    addRemoveEventListener(removeButton);
+  }
+
+  gallery.appendChild(newThumbnail);
+}
+
+function thumbnailHTML(data) {
+  return `
     ${
       admin
         ? `<button class="remove-thumbnail" style="display: block">X</button>`
@@ -142,16 +158,6 @@ function createAndAppendThumbnail(data) {
     <div class="play-icon">▶</div>
     <p>${data.description}</p>
   `;
-  newThumbnail.dataset.videoUrl = data.youtubeLink;
-
-  if (admin) {
-    // Add event listener to the remove button
-    const removeButton = newThumbnail.querySelector(".remove-thumbnail");
-    addRemoveEventListener(removeButton);
-  }
-
-  // Append the new thumbnail to the gallery
-  gallery.appendChild(newThumbnail);
 }
 
 document
