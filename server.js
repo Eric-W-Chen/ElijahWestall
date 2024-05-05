@@ -22,6 +22,12 @@ app.use(express.static(path.join(__dirname, "public")));
 // For parsing application/json
 app.use(express.json());
 
+//Allow iFrame to work on our page
+app.use((req, res, next) => {
+  res.header("X-Frame-Options", "ALLOWALL");
+  next();
+});
+
 app.get("/", (req, res) => {
   res.sendFile("/index.html", { root: __dirname });
 });
