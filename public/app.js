@@ -133,21 +133,25 @@ function createAndAppendThumbnail(data) {
   const newThumbnail = document.createElement("div");
   newThumbnail.className = "video-thumbnail";
   newThumbnail.innerHTML = `
-    <button class="remove-thumbnail" style="display: block">X</button>
+    ${
+      admin
+        ? `<button class="remove-thumbnail" style="display: block">X</button>`
+        : ``
+    }
     <img src="${data.path}" alt="${data.description}">
     <div class="play-icon">▶</div>
     <p>${data.description}</p>
   `;
   newThumbnail.dataset.videoUrl = data.youtubeLink;
 
-  // Append the new thumbnail to the gallery
-  gallery.appendChild(newThumbnail);
-
   if (admin) {
     // Add event listener to the remove button
     const removeButton = newThumbnail.querySelector(".remove-thumbnail");
     addRemoveEventListener(removeButton);
   }
+
+  // Append the new thumbnail to the gallery
+  gallery.appendChild(newThumbnail);
 }
 
 document
