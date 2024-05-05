@@ -22,12 +22,6 @@ app.use(express.static(path.join(__dirname, "public")));
 // For parsing application/json
 app.use(express.json());
 
-//Allow embedding of pages from the same domain to enable iFrames
-app.use((req, res, next) => {
-  res.header("X-Frame-Options", "SAMEORIGIN");
-  next();
-});
-
 app.get("/", (req, res) => {
   res.sendFile("/index.html", { root: __dirname });
 });
