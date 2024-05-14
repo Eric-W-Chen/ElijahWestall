@@ -48,7 +48,7 @@ html {
 
 .video-gallery {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Creates two columns per row */
+  grid-template-columns: repeat(3, 1fr); /* Creates two columns per row */
   gap: 20px; /* Spacing between thumbnails */
   padding: 20px; /* Padding around the entire grid */
 }
@@ -57,17 +57,17 @@ html {
   position: relative;
   cursor: pointer;
   overflow: hidden;
-  aspect-ratio: 16 / 9; /* Ensures all thumbnails maintain a 16:9 aspect ratio */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: #000; /* Optional: in case of transparent images */
 }
 
 .video-thumbnail img {
-  width: 100%; /* Makes sure the image covers the full area of the thumbnail */
-  height: 100%; /* Ensures the height matches the width maintaining the aspect ratio */
-  object-fit: cover; /* Ensures the image covers the area without distorting aspect ratio */
+  width: 100%; /* Full width of the container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Cover the area without distorting */
 }
 
 .play-icon {
@@ -75,33 +75,21 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 30px; /* Play icon size */
+  font-size: 30px; /* Adjust size as needed */
   color: #fff;
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease; /* Smooth transition for appearance */
 }
 
 .video-thumbnail:hover .play-icon {
-  opacity: 1; /* Play icon appears on hover */
+  opacity: 1; /* Show the play icon on hover */
 }
 
 .video-thumbnail p {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
   text-align: center;
   color: #fff;
-  font-size: 16px;
-  padding: 10px 0;
-  background-color: rgba(
-    0,
-    0,
-    0,
-    0.7
-  ); /* Semi-transparent overlay for readability */
-  margin: 0;
-  transition: background-color 0.3s ease;
-  margin-bottom: 20px;
+  font-size: 14px;
+  margin-top: 5px; /* Space between image and text */
 }
 
 .video-thumbnail:hover p {
@@ -113,9 +101,15 @@ html {
   ); /* Darkens the caption background on hover for effect */
 }
 
+@media (max-width: 900px) {
+  .video-gallery {
+    grid-template-columns: repeat(2, 1fr); /* Two columns on medium screens */
+  }
+}
+
 @media (max-width: 600px) {
   .video-gallery {
-    grid-template-columns: 1fr; /* Only one column on small screens */
+    grid-template-columns: 1fr; /* One column on small screens */
   }
 }
 
