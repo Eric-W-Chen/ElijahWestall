@@ -3,7 +3,6 @@ const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
 const fs = require("fs");
-const helmet = require("helmet");
 
 const app = express();
 const port = process.env.PORT || 8000; // Default to 8000 if process.env.PORT isn't set
@@ -26,28 +25,6 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.sendFile("/index.html", { root: __dirname });
 });
-
-// Middleware to set various security headers
-app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "https://www.youtube.com", "https://s.ytimg.com"],
-        frameSrc: ["'self'", "https://www.youtube.com"],
-        imgSrc: ["'self'", "data:", "https://*.googleusercontent.com"],
-        styleSrc: ["'self'", "'unsafe-inline'"],
-        connectSrc: ["'self'", "https://www.youtube.com"],
-      },
-    },
-    // Enable HSTS with a max age of one year
-    hsts: {
-      maxAge: 31536000,
-      includeSubDomains: true,
-      preload: true,
-    },
-  })
-);
 
 // Multer setup for file uploads
 const storage = multer.diskStorage({
